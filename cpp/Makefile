@@ -7,8 +7,11 @@ headers := $(wildcard *.hpp)
 
 all: $(target)
 
+run: $(target)
+	./$(target)
+
 $(target): $(srcs) $(headers)
 	@mkdir -p $(builddir)
 	$(CXX) $(srcs) -o $@
 
-.PHONY: all
+.PHONY: all run
