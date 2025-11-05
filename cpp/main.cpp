@@ -1,5 +1,4 @@
 #include <algorithm>
-// #include <bits/stdc++.h>
 #include <iomanip>
 #include <iostream>
 #include <stdexcept>
@@ -21,8 +20,16 @@ struct Person {
   Color color;
 };
 
+/**
+ * Helper function that reads and validates color input from user
+ * @throws invalid_argument if color that's read isn't valid
+ */
 Color get_color();
-void output(const Person &person);
+
+/**
+ * Helper function to pretty-print the output
+ */
+void output(const Person &person) noexcept;
 
 int main(int argc, char **argv) {
   if (argc > 1) {
@@ -30,6 +37,11 @@ int main(int argc, char **argv) {
     exit(1);
   }
 
+  /*
+   * Normally you don't want to use `new` and `delete` at all (you should be
+   * using smart pointers).
+   * However we're trying to illustrate a point here so
+   */
   Person *person = new Person;
 
   std::cout << "Enter your name: \n";
@@ -44,9 +56,13 @@ int main(int argc, char **argv) {
     exit(1);
   }
 
-  output(*person);
-
+  /*
+   * BUG HERE!!
+   * This is a 'use after free' error, which is something that no C++ compiler
+   * will catch and warn you about. The rust compiler will, though.
+   */
   delete person;
+  output(*person);
 
   return 0;
 }
@@ -76,7 +92,7 @@ Color get_color() {
   return str_enum_map.at(color_str);
 }
 
-void output(const Person &person) {
+void output(const Person &person) noexcept {
   // ANSI color codes
   const std::string RESET = "\033[0m";
   const std::string BOLD = "\033[1m";
@@ -84,6 +100,7 @@ void output(const Person &person) {
   std::string color_code;
   std::string color_name;
 
+  // To print terminal colors
   switch (person.color) {
   case Color::RED:
     color_code = "\033[38;5;196m"; // Bright red
