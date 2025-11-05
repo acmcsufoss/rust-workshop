@@ -18,11 +18,11 @@ enum Color {
 
 struct Person {
   std::string name;
-  Color fav_color;
+  Color color;
 };
 
 Color get_color();
-void output(const std::string &name, Color color);
+void output(const Person &person);
 
 int main(int argc, char **argv) {
   if (argc > 1) {
@@ -35,15 +35,16 @@ int main(int argc, char **argv) {
   std::string name;
   std::getline(std::cin, name);
 
+  Person *person = new Person;
   Color color;
   try {
-    color = get_color();
+    person->color = get_color();
   } catch (const std::exception &e) {
     std::cerr << "Error: " << e.what() << "\n";
     exit(1);
   }
 
-  output(name, color);
+  output(*person);
 
   return 0;
 }
@@ -73,7 +74,7 @@ Color get_color() {
   return str_enum_map.at(color_str);
 }
 
-void output(const std::string &name, Color color) {
+void output(const Person &person) {
   // ANSI color codes
   const std::string RESET = "\033[0m";
   const std::string BOLD = "\033[1m";
@@ -81,7 +82,7 @@ void output(const std::string &name, Color color) {
   std::string color_code;
   std::string color_name;
 
-  switch (color) {
+  switch (person.color) {
   case Color::RED:
     color_code = "\033[38;5;196m"; // Bright red
     color_name = "RED";
@@ -120,14 +121,14 @@ void output(const std::string &name, Color color) {
   const std::string H = "═";
   const std::string V = "║";
 
-  int width = std::max(name.length(), color_name.length()) + 4;
+  int width = std::max(person.name.length(), color_name.length()) + 4;
   std::string top_border = TL + std::string(width, H[0]) + TR;
   std::string bottom_border = BL + std::string(width, H[0]) + BR;
 
   // Print the fancy table
   std::cout << top_border << "\n";
-  std::cout << V << " " << BOLD << std::setw(width - 1) << std::left << name
-            << RESET << V << "\n";
+  std::cout << V << " " << BOLD << std::setw(width - 1) << std::left
+            << person.name << RESET << V << "\n";
   std::cout << V << " " << std::setw(width - 1) << std::left << "Color:" << V
             << "\n";
   std::cout << V << " " << BOLD << color_code << std::setw(width - 1)
