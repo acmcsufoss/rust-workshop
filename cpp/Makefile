@@ -5,11 +5,10 @@ target := $(builddir)$(pname)
 srcs := $(wildcard *.cpp)
 headers := $(wildcard *.hpp)
 
-all: build
+all: $(target)
 
 $(target): $(srcs) $(headers)
 	@mkdir -p $(builddir)
-	$(CXX) $(srcs) -o $^
+	$(CXX) $(srcs) -o $@
 
-
-.PHONY: all build
+.PHONY: all
