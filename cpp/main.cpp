@@ -30,12 +30,12 @@ int main(int argc, char **argv) {
     exit(1);
   }
 
+  Person *person = new Person;
+
   std::cout << "Enter your name: \n";
   std::cout << ">> ";
-  std::string name;
-  std::getline(std::cin, name);
+  std::getline(std::cin, person->name);
 
-  Person *person = new Person;
   Color color;
   try {
     person->color = get_color();
@@ -45,6 +45,8 @@ int main(int argc, char **argv) {
   }
 
   output(*person);
+
+  delete person;
 
   return 0;
 }
