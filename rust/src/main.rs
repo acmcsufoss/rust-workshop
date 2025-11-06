@@ -1,13 +1,12 @@
+use std::collections::HashMap;
 use std::env;
 use std::io::{self, Write};
-use std::collections::HashMap;
 
 // Simple data structure representing a person with a name and a favorite color
 struct Person {
     name: String,
     color: Color,
 }
-
 
 // Enum for supported colors. Derive Clone so we can copy an owned Color out of collections
 #[derive(Clone)]
@@ -16,7 +15,6 @@ enum Color {
     Blue,
     Green,
 }
-
 
 fn main() {
     // Validate command-line usage: this program expects no arguments
@@ -51,9 +49,16 @@ fn main() {
     };
 
     // Print a formatted output box for the person
-    output(person)
-}
+    output(person);
 
+    /*
+     * Error here! This println function attempts to access a value that the 'output' function
+     * now owns. Unlike C++, functions won't copy heap-allocated memory by default.
+     * To fix this, we could either use `person.copy()` in the above call, or change output to work
+     * on an ummutable reference (best).
+     */
+    // println!("{}", person.name);
+}
 
 // Function we will implement together :)
 // Function to prompt and parse a color string into the Color enum
@@ -85,7 +90,6 @@ fn get_color() -> Result<Color, String> {
         .cloned()
         .ok_or_else(|| String::from("invalid color")) // `||` is a lambda
 }
-
 
 // Pretty-print the Person using ANSI color codes and box drawing characters
 // Takes a reference to Person so we don't transfer ownership
