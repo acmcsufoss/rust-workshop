@@ -1,21 +1,20 @@
 use std::env;
 use std::io::{self, Write};
+use std::collections::HashMap;
 
 struct Person {
     name: String,
     color: Color,
 }
 
-#[allow(dead_code)]
+
+#[derive(Clone)]
 enum Color {
     Red,
     Blue,
     Green,
-    Yellow,
-    Orange,
-    Pink,
-    Purple,
 }
+
 
 fn main() {
     if env::args().len() > 1 {
@@ -26,37 +25,35 @@ fn main() {
         std::process::exit(1);
     }
 
-    // Read name
     println!("Enter your name: ");
     print!(">> ");
     io::stdout().flush().expect("Failed to flush");
+
     let mut line = String::new();
     io::stdin()
         .read_line(&mut line)
         .expect("Failed to read line");
 
+    let color = get_color().unwrap();
+
     let person = &Person {
         name: String::from(line.trim()),
-        color: Color::Red,
+        color: color,
     };
 
-    /*
-     * This `drop` call is kinda like `delete` C++. Try uncommenting this and see if the program
-     * compiles with the same bug our C++ code had.
-     */
     // drop(person);
+
     output(person)
 }
 
-// TODO: Implement this function!! ================================================================
-//
-// fn get_color() {
-//
-// }
 
-// You can ignore this function ===================================================================
+// Function we will implement together :)
+fn get_color() -> Result<Color, String> {
+    
+}
+
+
 fn output(person: &Person) {
-    // ANSI color codes
     const RESET: &str = "\x1b[0m";
     const BOLD: &str = "\x1b[1m";
 
@@ -64,13 +61,8 @@ fn output(person: &Person) {
         Color::Red => ("\x1b[38;5;196m", "RED"),
         Color::Green => ("\x1b[38;5;46m", "GREEN"),
         Color::Blue => ("\x1b[38;5;21m", "BLUE"),
-        Color::Yellow => ("\x1b[38;5;226m", "YELLOW"),
-        Color::Pink => ("\x1b[38;5;213m", "PINK"),
-        Color::Purple => ("\x1b[38;5;129m", "PURPLE"),
-        Color::Orange => ("\x1b[38;5;208m", "ORANGE"),
     };
 
-    // Box drawing characters
     const TL: &str = "╔";
     const TR: &str = "╗";
     const BL: &str = "╚";
@@ -82,7 +74,6 @@ fn output(person: &Person) {
     let top_border = format!("{}{}{}", TL, H.repeat(width), TR);
     let bottom_border = format!("{}{}{}", BL, H.repeat(width), BR);
 
-    // Print the fancy table
     println!("{}", top_border);
     println!(
         "{} {}{:<width$}{}{}",
