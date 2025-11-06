@@ -1,12 +1,11 @@
 use std::env;
 use std::io::{self, Write};
-use std::collections::HashMap;
+// use std::collections::HashMap;
 
 struct Person {
     name: String,
     color: Color,
 }
-
 
 #[derive(Clone)]
 enum Color {
@@ -14,7 +13,6 @@ enum Color {
     Blue,
     Green,
 }
-
 
 fn main() {
     if env::args().len() > 1 {
@@ -34,24 +32,20 @@ fn main() {
         .read_line(&mut line)
         .expect("Failed to read line");
 
-    let color = get_color().unwrap();
+    // let color = get_color().unwrap();
 
     let person = &Person {
         name: String::from(line.trim()),
-        color: color,
+        color: Color::Red,
     };
-
-    // drop(person);
 
     output(person)
 }
 
-
 // Function we will implement together :)
-fn get_color() -> Result<Color, String> {
-    
-}
 
+// fn get_color() -> Result<Color, String> {
+// }
 
 fn output(person: &Person) {
     const RESET: &str = "\x1b[0m";
@@ -97,3 +91,4 @@ fn output(person: &Person) {
     );
     println!("{}", bottom_border);
 }
+
