@@ -31,6 +31,7 @@ Color get_color();
  */
 void output(const Person &person) noexcept;
 
+// Main Point of Entry! =======================================================
 int main(int argc, char **argv) {
   if (argc > 1) {
     std::cerr << "Error: " << argv[0] << " expects no arguments\n";
@@ -67,6 +68,7 @@ int main(int argc, char **argv) {
   return 0;
 }
 
+// This is the function we're going to re-implement in Rust!
 Color get_color() {
   // Read input
   std::cout << "Enter your favorite color (one of RED, BLUE, GREEN, YELLOW, "
@@ -88,10 +90,10 @@ Color get_color() {
     throw std::invalid_argument("invalid color or color not supported");
   }
 
-  // Input is valid
   return str_enum_map.at(color_str);
 }
 
+// ================= Not super important =================
 void output(const Person &person) noexcept {
   // ANSI color codes
   const std::string RESET = "\033[0m";
@@ -132,7 +134,6 @@ void output(const Person &person) noexcept {
     break;
   }
 
-  // Box drawing characters
   const std::string TL = "╔";
   const std::string TR = "╗";
   const std::string BL = "╚";
@@ -144,7 +145,6 @@ void output(const Person &person) noexcept {
   std::string top_border = TL + std::string(width, H[0]) + TR;
   std::string bottom_border = BL + std::string(width, H[0]) + BR;
 
-  // Print the fancy table
   std::cout << top_border << "\n";
   std::cout << V << " " << BOLD << std::setw(width - 1) << std::left
             << person.name << RESET << V << "\n";
