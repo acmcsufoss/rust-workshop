@@ -38,6 +38,12 @@ fn main() {
     output(person)
 }
 
+// TODO: Implement this function!! ================================================================
+//
+// fn get_color() {
+//
+// }
+
 // You can ignore this function ===================================================================
 fn output(person: &Person) {
     // ANSI color codes
