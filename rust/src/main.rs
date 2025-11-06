@@ -1,4 +1,5 @@
 use std::env;
+use std::io::{self, Write};
 
 struct Person {
     name: String,
@@ -25,8 +26,16 @@ fn main() {
         std::process::exit(1);
     }
 
+    // Read name
+    println!("Enter your name: ");
+    print!(">> ");
+    io::stdout().flush().expect("Failed to flush");
+    let stdin = io::stdin();
+    let mut line = String::new();
+    stdin.read_line(&mut line).expect("Failed to read line");
+
     let person = &Person {
-        name: String::from("Hi"),
+        name: String::from(line.trim()),
         color: Color::Red,
     };
 
