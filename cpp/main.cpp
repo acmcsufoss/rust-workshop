@@ -138,7 +138,7 @@ void output(const Person &person) noexcept {
   const std::string TR = "╗";
   const std::string BL = "╚";
   const std::string BR = "╝";
-  const std::string H = "═";
+  const std::string H = "=";
   const std::string V = "║";
 
   int width = std::max(person.name.length(), color_name.length()) + 4;
