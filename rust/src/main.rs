@@ -30,11 +30,15 @@ fn main() {
         color: Color::Red,
     };
 
+    /*
+     * This `drop` call is kinda like `delete` C++. Try uncommenting this and see if the program
+     * compiles with the same bug our C++ code had.
+     */
     // drop(person);
-
     output(person)
 }
 
+// You can ignore this function ===================================================================
 fn output(person: &Person) {
     // ANSI color codes
     const RESET: &str = "\x1b[0m";
