@@ -58,7 +58,7 @@ fn main() {
 }
 
 
-// !!!!!FUNCTION TO IMPLEMENT DURING DEMO!!!!!
+// Function we will implement together :)
 // Function to prompt and parse a color string into the Color enum
 // Returns Result<Color, String> so caller can decide how to handle invalid input
 fn get_color() -> Result<Color, String> {
