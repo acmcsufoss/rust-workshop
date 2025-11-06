@@ -50,9 +50,6 @@ fn main() {
         color: color,
     };
 
-    // Note: dropping the reference `person` explicitly would be unnecessary and could cause confusion; ownership and borrow rules manage lifetimes automatically in Rust
-    // drop(person);
-
     // Print a formatted output box for the person
     output(person)
 }
