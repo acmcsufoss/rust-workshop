@@ -43,21 +43,13 @@ fn main() {
     let color = get_color().unwrap();
 
     // Build a Person instance from the collected name and color. Trim whitespace from the name
-    let person = Person {
+    let person = &Person {
         name: String::from(line.trim()),
         color: color,
     };
 
     // Print a formatted output box for the person
     output(person);
-
-    /*
-     * Error here! This println function attempts to access a value that the 'output' function
-     * now owns. Unlike C++, functions won't copy heap-allocated memory by default.
-     * To fix this, we could either use `person.copy()` in the above call, or change output to work
-     * on an ummutable reference (best).
-     */
-    // println!("{}", person.name);
 }
 
 // Function we will implement together :)
@@ -93,7 +85,7 @@ fn get_color() -> Result<Color, String> {
 
 // Pretty-print the Person using ANSI color codes and box drawing characters
 // Takes a reference to Person so we don't transfer ownership
-fn output(person: Person) {
+fn output(person: &Person) {
     // ANSI reset and bold codes used to style the output
     const RESET: &str = "\x1b[0m";
     const BOLD: &str = "\x1b[1m";
