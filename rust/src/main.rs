@@ -2,6 +2,7 @@ use std::env;
 use std::io::{self, Write};
 // use std::collections::HashMap;
 
+#[derive(Clone)]
 struct Person {
     name: String,
     color: Color,
@@ -34,12 +35,21 @@ fn main() {
 
     // let color = get_color().unwrap();
 
-    let person = &Person {
+    let person = Person {
         name: String::from(line.trim()),
         color: Color::Red,
     };
 
-    output(person)
+    // .clone() creates a copy
+    output(person);
+
+    /*
+     * Error here! This println function attempts to access a value that the 'output' function
+     * now owns. Unlike C++, functions won't copy heap-allocated memory by default.
+     * To fix this, we could either use `person.copy()` in the above call, or change output to work
+     * on an ummutable reference (better solution).
+     */
+    println!("{}", person.name);
 }
 
 // Function we will implement together :)
@@ -47,7 +57,7 @@ fn main() {
 // fn get_color() -> Result<Color, String> {
 // }
 
-fn output(person: &Person) {
+fn output(person: Person) {
     const RESET: &str = "\x1b[0m";
     const BOLD: &str = "\x1b[1m";
 
