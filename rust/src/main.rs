@@ -86,7 +86,7 @@ fn get_color() -> Result<Color, String> {
     str_enum_map
         .get(color_str.as_str())
         .cloned()
-        .ok_or_else(|| String::from("invalid color"))
+        .ok_or_else(|| String::from("invalid color")) // `||` is a lambda
 }
 
 
