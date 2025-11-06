@@ -30,9 +30,10 @@ fn main() {
     println!("Enter your name: ");
     print!(">> ");
     io::stdout().flush().expect("Failed to flush");
-    let stdin = io::stdin();
     let mut line = String::new();
-    stdin.read_line(&mut line).expect("Failed to read line");
+    io::stdin()
+        .read_line(&mut line)
+        .expect("Failed to read line");
 
     let person = &Person {
         name: String::from(line.trim()),
