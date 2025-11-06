@@ -71,8 +71,7 @@ int main(int argc, char **argv) {
 // This is the function we're going to re-implement in Rust!
 Color get_color() {
   // Read input
-  std::cout << "Enter your favorite color (one of RED, BLUE, GREEN, YELLOW, "
-               "PINK, PURPLE, ORANGE): \n";
+  std::cout << "Enter your favorite color (one of RED, BLUE, GREEN, YELLOW, PINK, PURPLE, ORANGE): \n";
   std::cout << ">> ";
   std::string color_str;
   std::getline(std::cin, color_str);

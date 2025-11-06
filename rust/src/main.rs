@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::env;
 use std::io::{self, Write};
 
@@ -6,15 +7,11 @@ struct Person {
     color: Color,
 }
 
-#[allow(dead_code)]
+#[derive(Clone)]
 enum Color {
     Red,
     Blue,
     Green,
-    Yellow,
-    Orange,
-    Pink,
-    Purple,
 }
 
 fn main() {
@@ -35,9 +32,12 @@ fn main() {
         .read_line(&mut line)
         .expect("Failed to read line");
 
+    // This will panic and exit the program if the error condition is returned
+    let color = get_color().unwrap();
+
     let person = &Person {
         name: String::from(line.trim()),
-        color: Color::Red,
+        color: color,
     };
 
     /*
@@ -48,11 +48,28 @@ fn main() {
     output(person)
 }
 
-// TODO: Implement this function!! ================================================================
-//
-// fn get_color() {
-//
-// }
+// Done!!
+fn get_color() -> Result<Color, String> {
+    println!("Enter your favorite color (one of RED, BLUE, GREEN):");
+    let mut color_str = String::new();
+    io::stdin()
+        .read_line(&mut color_str)
+        .expect("Failed to read line");
+
+    let color_str = color_str.trim().to_lowercase();
+
+    let str_enum_map = HashMap::from([
+        ("red", Color::Red),
+        ("blue", Color::Blue),
+        ("green", Color::Green),
+    ]);
+
+    // No return keyword - function returns last expression (dont use a semicolon though)
+    str_enum_map
+        .get(color_str.as_str())
+        .cloned()
+        .ok_or_else(|| String::from("invalid color"))
+}
 
 // You can ignore this function ===================================================================
 fn output(person: &Person) {
@@ -64,10 +81,6 @@ fn output(person: &Person) {
         Color::Red => ("\x1b[38;5;196m", "RED"),
         Color::Green => ("\x1b[38;5;46m", "GREEN"),
         Color::Blue => ("\x1b[38;5;21m", "BLUE"),
-        Color::Yellow => ("\x1b[38;5;226m", "YELLOW"),
-        Color::Pink => ("\x1b[38;5;213m", "PINK"),
-        Color::Purple => ("\x1b[38;5;129m", "PURPLE"),
-        Color::Orange => ("\x1b[38;5;208m", "ORANGE"),
     };
 
     // Box drawing characters
