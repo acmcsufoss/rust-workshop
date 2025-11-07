@@ -17,7 +17,7 @@ the demo.
 
 ## Usage
 
->> requires a C++ compiler, GNU Make, and `cargo`
+> requires a C++ compiler, GNU Make, and `cargo`
 
 - To compile and run the C++ program, use `make run`.
 - To compile and run the Rust program, use `cargo run`.
