@@ -1,8 +1,8 @@
 # Rust workshop
 
 This is a quick demo of the rust language that demonstrates a few differences
-between C++ and Rust, and includes a to-be-written function that is the meat of
-the demo.
+between C++ and Rust, and includes a function that needs to be translated from
+C++ to Rust as the meat of the demo.
 
 ## Branches
 - **`main`**: Includes the C++ program in it's complete state, but with a memory
